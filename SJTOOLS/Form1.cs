@@ -8,14 +8,21 @@ using System.Linq;
 using System.Collections.Generic;
 using dotnetCampus.FileDownloader;
 using System.Threading.Tasks;
+using MaterialSkin.Controls;
+using MaterialSkin;
+using System.Threading;
 
 namespace SJTOOLS
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MaterialForm
     {
         public Form1()
         {
             InitializeComponent();
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Pink200, Primary.Pink100, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
         protected override void WndProc(ref Message m)
         {
@@ -192,12 +199,15 @@ namespace SJTOOLS
         {
             if (textBox3.Text != "双击选择文件")
             {
-                if (Sideload_check() != true)
+                string clicks = InvokeExcute(true, @"adb devices");
+                if (clicks.Contains("recovery") != true & Sideload_check() != true)
                 {
-                    MessageBox.Show("手机未处于Sideload模式", "警告");
+                    MessageBox.Show("手机未处于Recovery模式", "警告");
                 }
                 else
                 {
+                    Execute(true, "adb shell twrp sideload");
+                    Thread.Sleep(400);
                     Execute(false, string.Format(@"adb sideload ""{0}""", textBox3.Text));
                 }
             }
@@ -205,6 +215,7 @@ namespace SJTOOLS
 
         private void button6_Click(object sender, EventArgs e)
         {
+            button6.Enabled = false;
             Label[] labels = new Label[12];
             labels[0] = label4;
             labels[1] = label5;
@@ -245,9 +256,10 @@ namespace SJTOOLS
                     labels[i].Text += "设备未连接";
                 }
             }
+            button6.Enabled = true;
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void materialButton1_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("手机已解除BL锁。\n\n已刷入包含ADB或文件管理的第三方Recovery。\n\n已加密Data分区的手机无法操作（或者将Data分区解密）。\n\n熟悉在手机出现无法开机等意外情况的补救。\n\n！！谨慎操作，可能导致无法开机。！！", "前提条件", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (dialogResult == DialogResult.Yes)
@@ -381,6 +393,7 @@ namespace SJTOOLS
             {
                 Fbdevice = comboBox3.Text;
                 BL_lock_Check();
+                userdata_Check();
             }
         }
 
@@ -458,7 +471,6 @@ namespace SJTOOLS
                         }
                     }
                 }
-
             }
             else
             {
@@ -733,11 +745,11 @@ namespace SJTOOLS
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime date = DateTime.Now;
-            this.Text = "ADB and FASTBOOT Tools                                                       " + StringFG(date.ToString(), " ");
+            this.Text = "ADB and FASTBOOT Toolss                       " + StringFG(date.ToString(), " ");
         }
-        public void BL_lock_Check() 
+        public void BL_lock_Check()
         {
-            string ss = InvokeExcute(true, String.Format("fastboot -s {0} oem device-info",Fbdevice));
+            string ss = InvokeExcute(true, String.Format("fastboot -s {0} oem device-info", Fbdevice));
             ss = StringFG(ss, "Verity mode: true\r\n");
             if (ss.Contains("(bootloader) Device unlocked: true") == true)
             {
@@ -750,12 +762,23 @@ namespace SJTOOLS
                 label21.ImageIndex = 1;
             }
         }
-
+        public void userdata_Check() 
+        {
+            string ss = InvokeExcute(true, String.Format("fastboot -s {0} getvar partition-size:userdata", Fbdevice));
+            ss = StringFG(ss, "partition-size:userdata:").Replace(" ","").Replace("\r\n","");
+            string s = ss.Remove(ss.Length-25);
+            ulong shi = Convert.ToUInt64(s, 16);
+            for (int i = 0; i < 3; i++)
+            {
+                shi = shi / 1024;
+            }
+            label22.Text = "用户数据分区大小：" + shi.ToString() + "GB";
+        }
         private void button18_Click(object sender, EventArgs e)
         {
             if (Fbdevice != String.Empty)
             {
-                string ss = InvokeExcute(false, String.Format("fastboot -s {0} oem device-info",Fbdevice));
+                string ss = InvokeExcute(false, String.Format("fastboot -s {0} oem device-info", Fbdevice));
                 ss = StringFG(ss, "Verity mode: true\r\n");
                 if (ss.Contains("(bootloader) Device unlocked: true") == true)
                 {
@@ -785,7 +808,7 @@ namespace SJTOOLS
             {
                 if (((Button)sender) == button19)
                 {
-                    Execute(true,"fastboot reboot");
+                    Execute(true, "fastboot reboot");
                 }
                 else if (((Button)sender) == button20)
                 {
@@ -797,5 +820,7 @@ namespace SJTOOLS
                 MessageBox.Show("未选择设备！");
             }
         }
+
+
     }
 }

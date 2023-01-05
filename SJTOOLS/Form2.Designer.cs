@@ -41,7 +41,7 @@
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button5.Location = new System.Drawing.Point(449, 8);
+            this.button5.Location = new System.Drawing.Point(505, 67);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(120, 60);
             this.button5.TabIndex = 0;
@@ -52,7 +52,7 @@
             // button6
             // 
             this.button6.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button6.Location = new System.Drawing.Point(575, 8);
+            this.button6.Location = new System.Drawing.Point(631, 67);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(120, 60);
             this.button6.TabIndex = 1;
@@ -63,14 +63,15 @@
             // richTextBox3
             // 
             this.richTextBox3.BackColor = System.Drawing.Color.Black;
+            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.richTextBox3.ForeColor = System.Drawing.Color.White;
-            this.richTextBox3.Location = new System.Drawing.Point(0, 80);
+            this.richTextBox3.Location = new System.Drawing.Point(3, 177);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.ReadOnly = true;
             this.richTextBox3.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.richTextBox3.Size = new System.Drawing.Size(1177, 630);
+            this.richTextBox3.Size = new System.Drawing.Size(1291, 630);
             this.richTextBox3.TabIndex = 2;
             this.richTextBox3.Text = "";
             this.richTextBox3.WordWrap = false;
@@ -83,9 +84,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(368, 8);
+            this.button1.Location = new System.Drawing.Point(409, 67);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 25);
+            this.button1.Size = new System.Drawing.Size(90, 25);
             this.button1.TabIndex = 3;
             this.button1.Text = "下载依赖";
             this.button1.UseVisualStyleBackColor = true;
@@ -93,9 +94,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(368, 43);
+            this.button7.Location = new System.Drawing.Point(409, 102);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(80, 25);
+            this.button7.Size = new System.Drawing.Size(90, 25);
             this.button7.TabIndex = 4;
             this.button7.Text = "安装客户端";
             this.button7.UseVisualStyleBackColor = true;
@@ -103,7 +104,7 @@
             // 
             // Form2
             // 
-            this.ClientSize = new System.Drawing.Size(1177, 710);
+            this.ClientSize = new System.Drawing.Size(1297, 810);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox3);
