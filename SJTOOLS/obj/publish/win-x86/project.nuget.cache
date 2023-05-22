@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "xPZdcU8daDD3C3tR3AFWs8WMnL5FlfuNMpThvqJMlqvtq/jnk+ZViD/PVtQbOxbM8l5wwjTTD9O5WvGyMrKtRQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\sym18\\Source\\Repos\\lrst6963\\SJTOOLS\\SJTOOLS\\SJTOOLS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sym18\\.nuget\\packages\\dotnetcampus.filedownloader\\2.2.1\\dotnetcampus.filedownloader.2.2.1.nupkg.sha512",
+    "C:\\Users\\sym18\\.nuget\\packages\\materialskin.2\\2.3.1\\materialskin.2.2.3.1.nupkg.sha512",
+    "C:\\Users\\sym18\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.7\\microsoft.extensions.logging.abstractions.3.1.7.nupkg.sha512"
+  ],
+  "logs": []
+}

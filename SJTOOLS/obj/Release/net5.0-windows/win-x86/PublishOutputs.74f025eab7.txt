@@ -1,0 +1,2 @@
+C:\Users\sym18\Source\Repos\lrst6963\SJTOOLS\SJTOOLS\bin\Release\net5.0-windows\publish\win-x86\SJTOOLS.pdb
+C:\Users\sym18\Source\Repos\lrst6963\SJTOOLS\SJTOOLS\bin\Release\net5.0-windows\publish\win-x86\SJTOOLS.exe

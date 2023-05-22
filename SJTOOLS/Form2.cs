@@ -4,12 +4,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MaterialSkin.Controls;
-using MaterialSkin;
-
 namespace SJTOOLS
 {
-    public partial class Form2 : MaterialForm
+    public partial class Form2 : Form
     {
         string path = Application.StartupPath + "\\gnirehtet.exe";
         private BatStatus curBatSataus = BatStatus.NONE;
@@ -17,11 +14,6 @@ namespace SJTOOLS
         public Form2()
         {
             InitializeComponent();
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Pink200, Primary.Pink100, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
         }
 
         public static void SystemNotify(string content,string title,Icon icon) 

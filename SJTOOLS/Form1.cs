@@ -8,22 +8,16 @@ using System.Linq;
 using System.Collections.Generic;
 using dotnetCampus.FileDownloader;
 using System.Threading.Tasks;
-using MaterialSkin.Controls;
-using MaterialSkin;
 using System.Threading;
 
 namespace SJTOOLS
 {
-    public partial class Form1 : MaterialForm
+    public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Pink200, Primary.Pink100, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-        }
+}
         protected override void WndProc(ref Message m)
         {
             try

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Cb0U6S9P3DFK3Gc0EFtCxgnvRerwB86ES3+Td5wckwKpzc2b44ja66TX8BXpSRryJWIONm3XPJCFHCovzrwNPw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\sym18\\Source\\Repos\\lrst6963\\SJTOOLS\\SJTOOLS\\SJTOOLS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sym18\\.nuget\\packages\\dotnetcampus.filedownloader\\2.2.1\\dotnetcampus.filedownloader.2.2.1.nupkg.sha512",
+    "C:\\Users\\sym18\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.7\\microsoft.extensions.logging.abstractions.3.1.7.nupkg.sha512"
+  ],
+  "logs": []
+}

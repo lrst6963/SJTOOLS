@@ -85,9 +85,9 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button9 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.materialButton3 = new MaterialSkin.Controls.MaterialButton();
-            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
-            this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
+            this.materialButton3 = new System.Windows.Forms.Button();
+            this.materialButton2 = new System.Windows.Forms.Button();
+            this.materialButton1 = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
@@ -106,12 +106,12 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControl1.Location = new System.Drawing.Point(0, 4);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1099, 928);
+            this.tabControl1.Size = new System.Drawing.Size(972, 689);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -135,10 +135,10 @@
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Location = new System.Drawing.Point(4, 28);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1091, 896);
+            this.tabPage1.Size = new System.Drawing.Size(964, 657);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "ADB";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -494,7 +494,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage2.Size = new System.Drawing.Size(1091, 896);
+            this.tabPage2.Size = new System.Drawing.Size(947, 657);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "FASTBOOT";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -544,7 +544,7 @@
             this.panel2.Controls.Add(this.button10);
             this.panel2.Controls.Add(this.button12);
             this.panel2.Controls.Add(this.label17);
-            this.panel2.Location = new System.Drawing.Point(515, 584);
+            this.panel2.Location = new System.Drawing.Point(219, 262);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(421, 103);
@@ -744,7 +744,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage3.Size = new System.Drawing.Size(1071, 896);
+            this.tabPage3.Size = new System.Drawing.Size(947, 657);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "实用功能";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -752,78 +752,54 @@
             // materialButton3
             // 
             this.materialButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton3.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton3.Depth = 0;
             this.materialButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.materialButton3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.materialButton3.HighEmphasis = true;
-            this.materialButton3.Icon = null;
             this.materialButton3.Location = new System.Drawing.Point(414, 351);
             this.materialButton3.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.materialButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton3.Name = "materialButton3";
-            this.materialButton3.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton3.Size = new System.Drawing.Size(79, 36);
             this.materialButton3.TabIndex = 8;
             this.materialButton3.Text = "干掉ADB";
-            this.materialButton3.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton3.UseAccentColor = false;
             this.materialButton3.UseVisualStyleBackColor = true;
             this.materialButton3.Click += new System.EventHandler(this.button8_Click);
             // 
             // materialButton2
             // 
             this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton2.Depth = 0;
             this.materialButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.materialButton2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.materialButton2.HighEmphasis = true;
-            this.materialButton2.Icon = null;
             this.materialButton2.Location = new System.Drawing.Point(379, 243);
             this.materialButton2.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton2.Name = "materialButton2";
-            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton2.Size = new System.Drawing.Size(137, 36);
             this.materialButton2.TabIndex = 7;
             this.materialButton2.Text = "下载安装ADB驱动";
-            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton2.UseAccentColor = false;
             this.materialButton2.UseVisualStyleBackColor = true;
             this.materialButton2.Click += new System.EventHandler(this.button14_ClickAsync);
             // 
             // materialButton1
             // 
             this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton1.Depth = 0;
             this.materialButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.materialButton1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.materialButton1.HighEmphasis = true;
-            this.materialButton1.Icon = null;
             this.materialButton1.Location = new System.Drawing.Point(397, 298);
             this.materialButton1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
-            this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton1.Size = new System.Drawing.Size(108, 36);
             this.materialButton1.TabIndex = 6;
             this.materialButton1.Text = "清除锁屏密码";
-            this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton1.UseAccentColor = false;
             this.materialButton1.UseVisualStyleBackColor = true;
             this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
             // 
             // trackBar1
             // 
             this.trackBar1.AutoSize = false;
-            this.trackBar1.Location = new System.Drawing.Point(13, 624);
+            this.trackBar1.Location = new System.Drawing.Point(26, 407);
             this.trackBar1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.trackBar1.Maximum = 100;
             this.trackBar1.Minimum = 20;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(971, 27);
+            this.trackBar1.Size = new System.Drawing.Size(915, 36);
             this.trackBar1.TabIndex = 4;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar1.Value = 90;
@@ -836,12 +812,12 @@
             // 
             // panel3
             // 
+            this.panel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel3.Controls.Add(this.tabControl1);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(3, 64);
+            this.panel3.Location = new System.Drawing.Point(0, -2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1099, 932);
+            this.panel3.Size = new System.Drawing.Size(972, 698);
             this.panel3.TabIndex = 1;
             // 
             // Form1
@@ -849,17 +825,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1105, 1124);
+            this.ClientSize = new System.Drawing.Size(977, 705);
             this.Controls.Add(this.panel3);
-            this.DrawerHighlightWithAccent = false;
-            this.DrawerWidth = 0;
             this.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ADB and FASTBOOT Tools";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -874,7 +847,6 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -939,9 +911,9 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ImageList imageList1;
-        private MaterialSkin.Controls.MaterialButton materialButton1;
-        private MaterialSkin.Controls.MaterialButton materialButton2;
-        private MaterialSkin.Controls.MaterialButton materialButton3;
+        private System.Windows.Forms.Button materialButton1;
+        private System.Windows.Forms.Button materialButton2;
+        private System.Windows.Forms.Button materialButton3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label22;
     }
