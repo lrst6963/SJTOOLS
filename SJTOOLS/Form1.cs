@@ -68,80 +68,54 @@ namespace SJTOOLS
             }
             comboBox1.SelectedIndex = 1;
             comboBox2.SelectedIndex = 0;
-            strings[0] = label4.Text;
-            strings[1] = label5.Text;
-            strings[2] = label6.Text;
-            strings[3] = label7.Text;
-            strings[4] = label8.Text;
-            strings[5] = label9.Text;
-            strings[6] = label10.Text;
-            strings[7] = label11.Text;
-            strings[8] = label12.Text;
-            strings[9] = label13.Text;
-            strings[10] = label14.Text;
-            strings[11] = label15.Text;
+            for (int i = 0; i < 12; i++)
+            {
+                var label = Controls.Find($"label{i + 4}", true).FirstOrDefault() as Label;
+                if (label != null)
+                {
+                    strings[i] = label.Text;
+                }
+            }
+
             Opacity = 0.9F;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            switch (comboBox1.SelectedIndex)
+            // 验证设备是否连接
+            if (!Devices_check())
             {
-                case 1:
-                    if (InvokeExcute(true, @"adb reboot").Contains("no devices") == true)
-                    {
-                        mess_error();
-                    }
-                    else
-                    {
-                        mess_done();
-                    }
-                    break;
-                case 2:
-                    if (InvokeExcute(true, @"adb reboot recovery").Contains("no devices") == true)
-                    {
-                        mess_error();
-                    }
-                    else
-                    {
-                        mess_done();
-                    }
-                    break;
-                case 3:
-                    if (InvokeExcute(true, @"adb reboot bootloader").Contains("no devices") == true)
-                    {
-                        mess_error();
-                    }
-                    else
-                    {
-                        mess_done();
-                    }
-                    break;
-                case 0:
-                    if (InvokeExcute(true, @"adb shell reboot -p").Contains("no devices") == true)
-                    {
-                        mess_error();
-                    }
-                    else
-                    {
-                        mess_done();
-                    }
-                    break;
-                case 4:
-                    if (InvokeExcute(true, @"adb shell edl").Contains("no devices") == true)
-                    {
-                        mess_error();
-                    }
-                    else
-                    {
-                        mess_done();
-                    }
-                    break;
-                default:
-                    MessageBox.Show("请选择选项");
-                    break;
+                mess_error();
+                return;
+            }
+            // 使用字典映射操作命令，提高可读性和可维护性
+            var commands = new Dictionary<int, string>
+            {
+                { 0, "shell reboot -p" },  // 关机
+                { 1, "reboot" },           // 重启
+                { 2, "reboot recovery" },  // 重启到Recovery
+                { 3, "reboot bootloader" },// 重启到Bootloader
+                { 4, "shell edl" }         // 进入EDL模式
+            };
+            // 检查是否选择了有效选项
+            if (!commands.TryGetValue(comboBox1.SelectedIndex, out var command))
+            {
+                MessageBox.Show("请选择选项");
+                return;
+            }
+            // 执行命令并处理结果
+            string output = InvokeExcute(true,"adb " + command);
+            MessageBox.Show(output);
+            if (output.Contains("no devices"))
+            {
+                mess_error();
+            }
+            else
+            {
+                mess_done();
             }
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -177,17 +151,45 @@ namespace SJTOOLS
 
         private async void button4_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text != "双击选择文件")
+            // 验证文件选择
+            var DefaultFileText = "双击选择文件";
+            if (textBox2.Text == DefaultFileText || !File.Exists(textBox2.Text))
             {
-                if (Devices_check() == true)
+                MessageBox.Show("请先选择有效的文件");
+                return;
+            }
+            if (!Devices_check())
+            {
+                mess_error();
+                return;
+            }
+            try
+            {
+                button4.Enabled = false; // 禁用按钮防止重复点击
+                string fileName = Path.GetFileName(textBox2.Text);
+                string safeFileName = fileName.Replace(" ", "_");
+                // 构建传输命令
+                string pushCommand = $@"adb push ""{textBox2.Text}"" /sdcard/adbtmp";
+                string moveCommand = $@"adb shell mv /sdcard/adbtmp ""/sdcard/{safeFileName}""";
+
+                // 异步执行传输
+                await Task.Run(() =>
                 {
-                    string filename = Path.GetFileName(textBox2.Text);
-                    string renames = filename.Replace(" ", "_");
-                    Execute(false, String.Format(@"adb push ""{0}"" /sdcard/adbtmp & adb shell mv /sdcard/adbtmp ""/sdcard/{1}"" & exit", textBox2.Text, renames));
-                    MessageBox.Show(String.Format("执行成功！\n文件传输到/sdcard/{0}", filename));
-                }
+                    Execute(false,pushCommand);
+                    Execute(false,moveCommand);
+                });
+                MessageBox.Show($"文件传输成功！\n路径: /sdcard/{fileName}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"文件传输失败: {ex.Message}");
+            }
+            finally
+            {
+                button4.Enabled = true; // 恢复按钮状态
             }
         }
+
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -207,51 +209,58 @@ namespace SJTOOLS
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private async void button6_Click(object sender, EventArgs e)
         {
-            button6.Enabled = false;
-            Label[] labels = new Label[12];
-            labels[0] = label4;
-            labels[1] = label5;
-            labels[2] = label6;
-            labels[3] = label7;
-            labels[4] = label8;
-            labels[5] = label9;
-            labels[6] = label10;
-            labels[7] = label11;
-            labels[8] = label12;
-            labels[9] = label13;
-            labels[10] = label14;
-            labels[11] = label15;
-            if (Devices_check() == true)
+            try
             {
-                if (InvokeExcute(true, @"adb shell ""pm list features | grep host""").Contains("android.hardware.usb.host") == true)
+                button6.Enabled = false;
+
+                Label[] labels =
+                [
+                    label4, label5, label6, label7,
+            label8, label9, label10, label11,
+            label12, label13, label14, label15
+                ];
+
+                if (!Devices_check())
                 {
-                    labels[8].Text = "是否支持OTG：是";
+                    UpdateLabelsForDisconnectedDevice(labels);
+                    return;
                 }
-                else
-                {
-                    label12.Text = "是否支持OTG：否";
-                }
-                for (int i = 0; i < 12; i++)
-                {
-                    if (i != 8)
-                    {
-                        labels[i].Text = strings[i];
-                        labels[i].Text += GetPhoneInfo(i);
-                    }
-                }
+
+                await CheckOtgSupportAndUpdateLabels(labels);
             }
-            else
+            finally
             {
-                for (int i = 0; i < 12; i++)
-                {
-                    labels[i].Text = strings[i];
-                    labels[i].Text += "设备未连接";
-                }
+                button6.Enabled = true;
             }
-            button6.Enabled = true;
         }
+
+        private void UpdateLabelsForDisconnectedDevice(Label[] labels)
+        {
+            for (int i = 0; i < labels.Length; i++)
+            {
+                labels[i].Text = $"{strings[i]}设备未连接";
+            }
+        }
+
+        private async Task CheckOtgSupportAndUpdateLabels(Label[] labels)
+        {
+            bool hasOtgSupport = await Task.Run(() =>
+                InvokeExcute(true, @"adb shell ""pm list features | grep host""")
+                .Contains("android.hardware.usb.host"));
+
+            labels[8].Text = $"是否支持OTG：{(hasOtgSupport ? "是" : "否")}";
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                if (i != 8)
+                {
+                    labels[i].Text = $"{strings[i]}{GetPhoneInfo(i)}";
+                }
+            }
+        }
+
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
@@ -303,46 +312,52 @@ namespace SJTOOLS
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Button but = new Button();// 创建button按钮类
-            but.Name = "but";//给按钮设置名字
-            but.Text = "A";//给按钮设置标题
-            but.Click += new EventHandler(but_Click);//给按钮添加click事件
-            but.Size = new Size(100, 100);// 设置按钮的大小
-            but.Location = new Point(50, 20);//设置按钮的位置
-            but.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            // 创建并配置新窗口
+            var partitionForm = new Form
+            {
+                Text = "选择分区",
+                FormBorderStyle = FormBorderStyle.Fixed3D,
+                ClientSize = new Size(300, 200),
+                StartPosition = FormStartPosition.CenterScreen,
+                MaximizeBox = false
+            };
+            // 创建分区选择按钮
+            var buttonA = CreatePartitionButton("A", new Point(50, 20), 100, 100, 30);
+            var buttonB = CreatePartitionButton("B", new Point(150, 20), 100, 100, 30);
+            var rebootButton = CreateRebootButton(new Point(100, 130), 100, 30);
+            // 添加按钮到窗口
+            partitionForm.Controls.AddRange(new Control[] { buttonA, buttonB, rebootButton });
 
-            Button but1 = new Button();// 创建button按钮类
-            but1.Name = "but1";//给按钮设置名字
-            but1.Text = "B";//给按钮设置标题
-            but1.Click += new EventHandler(but_Click);//给按钮添加click事件
-            but1.Size = new Size(100, 100);// 设置按钮的大小
-            but1.Location = new Point(150, 20);//设置按钮的位置
-            but1.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-
-            Button but2 = new Button();// 创建button按钮类
-            but2.Name = "but2";//给按钮设置名字
-            but2.Text = "重启";//给按钮设置标题
-            but2.Click += new EventHandler(but_Click);//给按钮添加click事件
-            but2.Size = new Size(100, 30);// 设置按钮的大小
-            but2.Location = new Point(100, 130);//设置按钮的位置
-            but2.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-
-
-            //创建和设置新窗口↓
-            Form winform = new Form();//创建Form窗口类
-            winform.Load += new EventHandler(winform_Load);//给窗口加load事件
-            winform.FormBorderStyle = FormBorderStyle.Fixed3D;
-            winform.Text = "选择分区";//给窗口设置标题
-            winform.Height = 220;//给窗口设置高度
-            winform.Width = 320;//给窗口设置宽度
-            winform.Controls.Add(but);//给窗口添加设置好的按钮
-            winform.Controls.Add(but1);
-            winform.Controls.Add(but2);
-            winform.ShowIcon = true;// 设置窗口的lcon是否显示
-            winform.MaximizeBox = false;
-            winform.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            winform.Icon = (Icon)resources.GetObject("$this.Icon");
-            winform.ShowDialog(); //显示窗口显示形式父窗口不能活动
+            // 显示模态窗口
+            partitionForm.ShowDialog();
+        }
+        private Button CreatePartitionButton(string text, Point location, int width, int height, float fontSize)
+        {
+            var button = new Button
+            {
+                Name = $"btn{text}",
+                Text = text,
+                Size = new Size(width, height),
+                Location = location,
+                Font = new Font("Microsoft YaHei UI", fontSize, FontStyle.Regular),
+                TabStop = true
+            };
+            button.Click += but_Click;
+            return button;
+        }
+        private Button CreateRebootButton(Point location, int width, int height)
+        {
+            var button = new Button
+            {
+                Name = "btnReboot",
+                Text = "重启",
+                Size = new Size(width, height),
+                Location = location,
+                Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular),
+                TabStop = true
+            }; 
+            button.Click += but_Click;
+            return button;
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -399,10 +414,12 @@ namespace SJTOOLS
 
         private async void button14_ClickAsync(object sender, EventArgs e)
         {
-            string path = Application.StartupPath + "\\adb-setup-1.4.2.exe";
+            string path = Application.StartupPath + "\\ADBDrive.exe";
             FileInfo fileInfo = new FileInfo(path);
-            var segmentFileDownloader = new SegmentFileDownloader("https://pan.konon.top/zahuo/adb-setup-1.4.2.exe", fileInfo);
-            Form2.SystemNotify("进入后台下载！", "通知", (Icon)(resources.GetObject("$this.Icon")));
+            var segmentFileDownloader = new SegmentFileDownloader("https://los.konon.top/d/Alist/ADBDrive.exe?sign=hqgqu5AXRnGAQnXCBu9D0TapykVPn6tRE4qGvkE03dI=:0", fileInfo);
+#pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+            Form2.SystemNotify("进入后台下载！", "通知", (Icon)resources.GetObject("$this.Icon"));
+#pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
             await segmentFileDownloader.DownloadFileAsync();
             if (segmentFileDownloader.File.Exists == true)
             {
@@ -413,7 +430,6 @@ namespace SJTOOLS
                 }
             }
         }
-
         private void button15_Click(object sender, EventArgs e)
         {
             if (textBox4.Text != "双击选择文件")
@@ -592,7 +608,7 @@ namespace SJTOOLS
             }
         }
         public void mess_error() { MessageBox.Show("错误，没有找到设备!", "ERROR"); }
-        public void mess_done() { MessageBox.Show("执行成功!", "Successfully"); }
+        public void mess_done() { MessageBox.Show("执行成功!", "完成"); }
         public static string GetPhoneInfo(int Getprops)
         {
             string exstr = "";
@@ -663,38 +679,38 @@ namespace SJTOOLS
         {
             if (Fbdevice != string.Empty)
             {
-                if (((Button)sender).Text == "A")
+                switch(((Button)sender).Text)
                 {
-                    if (InvokeExcute(true, "fastboot.exe -s " + Fbdevice + " --set-active=a").Contains("OKAY") == true)
-                    {
-                        mess_done();
-                    }
-                    else
-                    {
-                        MessageBox.Show("失败", "ERROR");
-                    }
-                }
-                else if (((Button)sender).Text == "B")
-                {
-                    if (InvokeExcute(true, "fastboot.exe -s " + Fbdevice + " --set-active=b").Contains("OKAY") == true)
-                    {
-                        mess_done();
-                    }
-                    else
-                    {
-                        MessageBox.Show("失败", "ERROR");
-                    }
-                }
-                else
-                {
-                    if (InvokeExcute(true, "fastboot.exe -s " + Fbdevice + " reboot").Contains("OKAY") == true)
-                    {
-                        mess_done();
-                    }
-                    else
-                    {
-                        MessageBox.Show("失败", "ERROR");
-                    }
+                    case "A":
+                        if (InvokeExcute(true, string.Format("fastboot -s {0} --set-active=a", Fbdevice)).Contains("OKAY") == true)
+                        {
+                            mess_done();
+                        }
+                        else
+                        {
+                            MessageBox.Show("失败", "ERROR");
+                        }
+                        break;
+                    case "B":
+                        if (InvokeExcute(true, string.Format("fastboot -s {0} --set-active=b", Fbdevice)).Contains("OKAY") == true)
+                        {
+                            mess_done();
+                        }
+                        else
+                        {
+                            MessageBox.Show("失败", "ERROR");
+                        }
+                        break;
+                    default:
+                        if (InvokeExcute(true, string.Format("fastboot -s {0} reboot", Fbdevice)).Contains("OKAY") == true)
+                        {
+                            mess_done();
+                        }
+                        else
+                        {
+                            MessageBox.Show("失败", "ERROR");
+                        }
+                        break;
                 }
             }
             else
@@ -702,10 +718,7 @@ namespace SJTOOLS
                 MessageBox.Show("未选择设备！");
             }
         }
-        public void winform_Load(object sender, EventArgs e)//新窗口的加载事件
-        {
 
-        }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox2.SelectedIndex == 5)
